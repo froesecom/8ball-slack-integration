@@ -4,7 +4,7 @@ class StaticController < ApplicationController
     if token == Rails.application.secrets.slack_token
       # do all the rad stuff
     end
-    
+  
     render plain: "This is how you render text to slack me thinks"
   end
 end
