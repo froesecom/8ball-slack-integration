@@ -1,11 +1,22 @@
 class StaticController < ApplicationController
   def index
     token = params[:token]
+    input = params[:text]
     if token == Rails.application.secrets.slack_token
-      # do all the rad stuff
+      if input.downcase == "help"
+        render plain: "Ask a yes/no question, and I'll give you the answer."
+      elsif input_looks_like_a_question(input)
+        render plain: @answers.sample
+      else
+        render plain: "That's a pretty weird looking question."
+      end
     end
-  
-    render plain: "This is how you render text to slack me thinks"
+  end
+
+  private
+  def input_looks_like_a_question(input)
+    #do all the validations
+    true
   end
 end
 
