@@ -3,7 +3,8 @@ class StaticController < ApplicationController
     token = params[:token]
     input = params[:text]
     if token == Rails.application.secrets.slack_token
-      if input.downcase == "help"
+      
+      if needs_help(input)
         render plain: "Ask a yes/no question, and I'll give you the answer."
       elsif input_looks_like_a_question(input)
         render plain: @answers.sample
@@ -14,10 +15,16 @@ class StaticController < ApplicationController
   end
 
   private
+  
+  def needs_help(input)
+    input.downcase =~ /^help$|^h$/
+  end
+  
   def input_looks_like_a_question(input)
     #do all the validations
     true
   end
+
 end
 
 # Incoming params
